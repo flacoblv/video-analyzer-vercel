@@ -67,8 +67,24 @@ function App() {
       alert(`✅ Vidéo téléchargée : ${response.data.title}`)
       
     } catch (error) {
-      console.error('Erreur:', error)
-      alert('Erreur lors du chargement depuis YouTube : ' + (error.response?.data?.error || error.message))
+      console.error('Erreur complète:', error)
+      console.error('Response data:', error.response?.data)
+      console.error('Response status:', error.response?.status)
+      
+      let errorMessage = 'Erreur inconnue'
+      
+      if (error.response) {
+        // Erreur de l'API
+        if (typeof error.response.data === 'object') {
+          errorMessage = error.response.data.error || JSON.stringify(error.response.data)
+        } else {
+          errorMessage = error.response.data || error.response.statusText
+        }
+      } else if (error.message) {
+        errorMessage = error.message
+      }
+      
+      alert('❌ Erreur YouTube : ' + errorMessage)
       setProgress({ text: '', percent: 0 })
       setStep('upload')
     }
