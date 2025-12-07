@@ -1,8 +1,9 @@
 {
-  "builds": [
-    {
-      "src": "api/**/*.py",
-      "use": "@vercel/python"
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/**/*.py": {
+      "runtime": "python3.9"
     }
-  ]
+  }
 }
